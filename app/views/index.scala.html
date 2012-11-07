@@ -1,0 +1,36 @@
+@(notes: List[Note], noteForm: Form[Note])
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("Notes list") {
+    
+    <h1>@notes.size() note(s) FLUSH</h1>
+    
+    <ul>
+        @for(note <- notes) {
+            <li>
+                @note.title
+
+                @note.description
+                
+                @form(routes.Application.deleteNote(note.id)) {
+                    <input type="submit" value="Delete">
+                }
+            </li>
+        }
+    </ul>
+    
+    <h2>Add a new note</h2>
+    
+    @form(routes.Application.newNote()) {
+        
+        @inputText(noteForm("title"), '_id -> "title", '_label -> "Titre") 
+
+        @textarea(noteForm("description"), '_id -> "description", '_label -> "Description") 
+        
+        <input type="submit" value="Create">
+        
+    }
+    
+}
